@@ -1,2 +1,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+@import "home";
+
+html,
+body {
+    font-size: 14px;
+}
