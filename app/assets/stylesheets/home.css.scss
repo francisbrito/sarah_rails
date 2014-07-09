@@ -1,3 +1,36 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.page {
+    @include container-fixed;
+    > header {
+        @include make-row;
+        @extend .text-center;
+        > .page-title {
+            font-size: 6rem;
+        }
+        > .tag-line {
+            font-size: 1.5rem;
+        }
+    }
+    > .content {
+        > .sign-up {
+            @include center-block;
+            @include make-xs-column(12);
+            @include make-sm-column(6);
+            @include make-md-column(2);
+            @extend .btn, .btn-default;
+
+            float: none !important;
+            background-color: #b44031;
+            color: #fff;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: #b44031;
+                color: #fff;
+            }
+        }
+    }
+}
