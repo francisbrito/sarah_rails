@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
     $tagLine = $ '.tag-line'
+    $signButton = $ '.sign-up'
 
     # Ideally this array would come from somewhere in the server.
     tagLines = [
@@ -25,3 +26,6 @@ $ ->
     lapse = 5000
 
     setInterval tickHandler, lapse
+
+    # Setup Google authentication.
+    $signButton.click -> gapi.auth.signIn { callback: (result) -> console.dir (result); }
