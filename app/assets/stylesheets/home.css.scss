@@ -3,6 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .page {
     @include container-fixed;
+
+    margin-top: 19%;
+
     > header {
         @include make-row;
         @extend .text-center;
