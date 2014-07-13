@@ -32,6 +32,10 @@ gem 'bootstrap-sass'
 # Autoprefixer, recommended by Twitter Bootstrap
 gem 'autoprefixer-rails'
 
+# Omniauth
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
