@@ -26,6 +26,3 @@ $ ->
     lapse = 5000
 
     setInterval tickHandler, lapse
-
-    # Setup Google authentication.
-    $signButton.click -> gapi.auth.signIn { callback: (result) -> console.dir (result); }
