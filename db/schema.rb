@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140717235647) do
+ActiveRecord::Schema.define(version: 20140722022836) do
 
   create_table "messages", force: true do |t|
     t.string   "content"
-    t.integer  "used_id"
+    t.integer  "user_id"
     t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -34,6 +34,9 @@ ActiveRecord::Schema.define(version: 20140717235647) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "phone_number"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
