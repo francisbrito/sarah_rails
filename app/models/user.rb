@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   has_many :messages
 
   def update_from_google_oauth_hash(oauth_hash)
-      require 'pry'; binding.pry
       self.email ||= oauth_hash.info.email
       self.oauth_google = oauth_hash.credentials.token
       self.save
