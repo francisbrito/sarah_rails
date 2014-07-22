@@ -28,18 +28,20 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     #Add a user to the message object to be created.
     begin
-      user = User.find_by phone: params[:phone]
-      @message.user_id = user.id
+      #user = User.find_by phone: params[:phone]
+      #@message.user_id = user.id
     rescue Exception => e
       puts e.message
       puts e.backtrace.inspect
       # Reply to the user that they are not registered
-      format.json { render json: {:message : 'Not registered'}, status: :unprocessable_entity }
+      #format.json { render json: {:message : 'Not registered'}, status: :unprocessable_entity }
       return
     end
 
     respond_to do |format|
       if @message.save
+        #We send the msg id to the dispatcher worker
+        DispatchActionWorker.perform_async(@message.id)
         format.html { redirect_to @message, notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else
