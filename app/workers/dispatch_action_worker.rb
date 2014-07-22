@@ -24,29 +24,29 @@ class DispatchActionWorker
     case message_results.intent
     when 'Calendar_Appointment'
       AddEventWorker.perform_async(user_id=user.id, from_time=message_results.entities['datetime'][0].value.from, to_time=message_results.entities['datetime'][0].value.to, event_description=message_results.entities['agenda_entry'][0].value + ' with ' + message_results.entities['contact'][0].value)
-    when 'Calendar_Appointment_Edit'
+    when 'calendar_appointment_edit'
       EditEventWorker.perform_async(user_id=user.id, from_time=message_results.entities['datetime'][0].value.from, to_time=message_results.entities['datetime'][0].value.to, event_description=message_results.entities['agenda_entry'][0].value + ' with ' + message_results.entities['contact'][0].value)
-    when 'Contact_Add'
+    when 'contact_add'
       name = message_results.entities['contact'][0].suggested ? message_results.entities['contact'][0].value : ''
       email = message_results.entities['email'][0].suggested ? message_results.entities['email'][0].value : ''
       phone = message_results.entities['phone'][0].suggested ? message_results.entities['phone'][0].value : ''
       AddContactWorker.perform_async(user_id=user.id, contact_name=name, contact_email=email, contact_phone=phone)
-    when 'Contact_Delete'
+    when 'contact_delete'
       name = message_results.entities['contact'][0].suggested ? message_results.entities['contact'][0].value : ''
       email = message_results.entities['email'][0].suggested ? message_results.entities['email'][0].value : ''
       phone = message_results.entities['phone'][0].suggested ? message_results.entities['phone'][0].value : ''
       DeleteContactWorker.perform_async(user_id=user.id, contact_name=name, contact_email=email, contact_phone=phone)
-    when 'Retrieve_Mail'
+    when 'retrieve_mail'
       mail_qty = message_results.entities['number'][0].suggested ? message_results.entities['number'][0].value : nil
       if(mail_qty)
         RetrieveMailWorker.perform_async(user_id=user.id, mail_qty=mail_qty)
       else
         RetrieveMailWorker.perform_async(user_id=user.id)
       end
-    when 'Send_Mail'
+    when 'send_mail'
       email = message_results.entities['email'][0].suggested ? message_results.entities['email'][0].value : ''
-      subject = message_results.entities['subject'][0].suggested ? message_results.entities['subject'][0].value : ''
-      content = message_results.entities['content'][0].suggested ? message_results.entities['content'][0].value : ''
+      subject = message_results.entities['message_subject'][0].suggested ? message_results.entities['message_subject'][0].value : ''
+      content = message_results.entities['message_body'][0].suggested ? message_results.entities['message_body'][0].value : ''
       SendMailWorker.perform_async(user_id=user.id, email=email, subject=subject, content=content)
     else
       #Send the user a "i couldn't get what ya saying nigga"
