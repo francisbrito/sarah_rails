@@ -4,6 +4,7 @@ require 'uri'
 require 'json'
 
 # Response to whatsapp contact
+
 class Response
 	def send_response(phone_number, content)
 
@@ -20,8 +21,4 @@ class Response
 				response = http.request(request)
 	end
 
-	end
-
-# Send the request
-resp = Response.new()
-resp.send_response('18298647935','Sup, this works')	
+end

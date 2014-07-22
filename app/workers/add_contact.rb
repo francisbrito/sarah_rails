@@ -1,6 +1,7 @@
 class AddContactWorker
   include Sidekiq::Worker
   def perform(user_id, contact_name, contact_email, contact_phone)
+    
     #Step 1
     #Find the user
     #Step 2
