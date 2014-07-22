@@ -9,15 +9,11 @@ https://developers.google.com/google-apps/calendar/recurringevents
 
 =end
 
-rescue Exception => e
-  
-end
-
 class AddEventWorker
   include Sidekiq::Worker
-  
+
   def perform(user_id, event_description, from_time, to_time, recurrent_freq )
-    
+
     #Step 1
     #Find the user
 
@@ -70,14 +66,15 @@ print result.data.id
 
     #Step 2
     #Validate input
-    
+
     #Step 3
     #Use the user g-token to create the event using the calendar api
-    
+
     #Step 4
     #Call sarah_py POST to send a reply to the user indicating the meeting time
-    
+
     resp = Response.new()
-    resp.send_response('18298647935','Sup, this works') 
+    resp.send_response('18298647935','Sup, this works')
 
   end
+end
