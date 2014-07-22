@@ -21,12 +21,14 @@ class AddEventWorker
     #Step 1
     #Find the user
 
+    user = User.find user_id
+
     client = Google::APIClient.new
-    client.authorization.client_id = oauth_yaml["client_id"]
-    client.authorization.client_secret = oauth_yaml["client_secret"]
-    client.authorization.scope = oauth_yaml["scope"]
-    client.authorization.refresh_token = oauth_yaml["refresh_token"]
-    client.authorization.access_token = oauth_yaml["access_token"]
+    # client.authorization.client_id = oauth_yaml["client_id"]
+    # client.authorization.client_secret = oauth_yaml["client_secret"]
+    # client.authorization.scope = oauth_yaml["scope"]
+    # client.authorization.refresh_token = oauth_yaml["refresh_token"]
+    client.authorization.access_token = user.oauth_google
 
     if client.authorization.refresh_token && client.authorization.expired?
       client.authorization.fetch_access_token!
