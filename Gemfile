@@ -46,6 +46,9 @@ gem 'devise'
 # Library to process background jobs
 gem 'sidekiq'
 
+# Wit Client
+gem 'wit-ruby', '>= 0.0.2'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
