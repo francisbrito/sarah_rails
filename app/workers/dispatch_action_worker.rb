@@ -23,14 +23,36 @@ class DispatchActionWorker
     #This next part is horrible but it was the simplest approach we could think of at the time
     case message_results.intent
     when 'Calendar_Appointment'
-      AddEventWorker.perform_async(user_id=user.id, from_time=message_results.entities['datetime'][0].value.from, to_time=message_results.entities['datetime'][0].value.to, event_description=message_results.entities['agenda_entry'][0].value + ' with ' + message_results.entities['contact'][0].value)
+      params = {}
+      message_results.entities.each do | key, value |
+        if !message_results.entities[key][0]['suggested'].nil?
+          params[key] = message_results.entities[key][0]['suggested'] ? message_results.entities[key][0]['value'] : ''
+        else
+          params[key] = message_results.entities[key][0]['value']
+        end
+      end
+      AddEventWorker.perform_async(user_id=user.id, from_time=params['datetime']['from'], to_time=params['datetime']['to'], event_description=params['agenda_entry'], recurrent_freq=nil)
     when 'calendar_appointment_edit'
-      EditEventWorker.perform_async(user_id=user.id, from_time=message_results.entities['datetime'][0].value.from, to_time=message_results.entities['datetime'][0].value.to, event_description=message_results.entities['agenda_entry'][0].value + ' with ' + message_results.entities['contact'][0].value)
+      params = {}
+      message_results.entities.each do | key, value |
+        if !message_results.entities[key][0]['suggested'].nil?
+          params[key] = message_results.entities[key][0]['suggested'] ? message_results.entities[key][0]['value'] : ''
+        else
+          params[key] = message_results.entities[key][0]['value']
+        end
+      end
+      EditEventWorker.perform_async(user_id=user.id, from_time=params['datetime']['from'], to_time=params['datetime']['to'], event_description=params['agenda_entry'])
     when 'contact_add'
-      name = message_results.entities['contact'][0].suggested ? message_results.entities['contact'][0].value : ''
-      email = message_results.entities['email'][0].suggested ? message_results.entities['email'][0].value : ''
-      phone = message_results.entities['phone'][0].suggested ? message_results.entities['phone'][0].value : ''
-      AddContactWorker.perform_async(user_id=user.id, contact_name=name, contact_email=email, contact_phone=phone)
+      #require 'pry'; binding.pry
+      params = {}
+      message_results.entities.each do | key, value |
+        if !message_results.entities[key][0]['suggested'].nil?
+          params[key] = message_results.entities[key][0]['suggested'] ? message_results.entities[key][0]['value'] : ''
+        else
+          params[key] = message_results.entities[key][0]['value']
+        end
+      end
+      AddContactWorker.perform_async(user_id=user.id, contact_name=params['contact'], contact_email=params['email'], contact_phone=params['phone_number'])
     when 'contact_delete'
       name = message_results.entities['contact'][0].suggested ? message_results.entities['contact'][0].value : ''
       email = message_results.entities['email'][0].suggested ? message_results.entities['email'][0].value : ''

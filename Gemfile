@@ -67,3 +67,5 @@ gem 'wit_ruby'
 
 # gem for connecting sarah w/ google api
 gem 'google-api-client'
+
+#gem 'gdata'
