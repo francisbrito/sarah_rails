@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722022836) do
+ActiveRecord::Schema.define(version: 20140722040902) do
 
   create_table "messages", force: true do |t|
     t.string   "content"
@@ -37,6 +37,10 @@ ActiveRecord::Schema.define(version: 20140722022836) do
     t.string   "provider"
     t.string   "uid"
     t.string   "phone_number"
+    t.string   "oauth_facebook"
+    t.string   "oauth_google"
+    t.string   "oauth_twitter"
+    t.string   "oauth_github"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
