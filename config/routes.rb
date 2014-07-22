@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   devise_for :users
   get 'home/index'
   root 'home#index'
+
+  get 'dashboard/index'
+  
   #post 'messages/receive_message'
 
   # The priority is based upon order of creation: first created -> highest priority.
