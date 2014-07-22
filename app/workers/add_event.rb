@@ -1,4 +1,17 @@
+require 'rubygems'
+require 'google/api_client'
 require_relative '../../lib/baseworker.rb'
+
+=begin
+More info of how create events:
+
+https://developers.google.com/google-apps/calendar/recurringevents
+
+=end
+
+rescue Exception => e
+  
+end
 
 class AddEventWorker
   include Sidekiq::Worker
@@ -7,6 +20,19 @@ class AddEventWorker
     
     #Step 1
     #Find the user
+
+    client = Google::APIClient.new
+    client.authorization.client_id = oauth_yaml["client_id"]
+    client.authorization.client_secret = oauth_yaml["client_secret"]
+    client.authorization.scope = oauth_yaml["scope"]
+    client.authorization.refresh_token = oauth_yaml["refresh_token"]
+    client.authorization.access_token = oauth_yaml["access_token"]
+
+    if client.authorization.refresh_token && client.authorization.expired?
+      client.authorization.fetch_access_token!
+    end
+
+    service = client.discovered_api('calendar', 'v3')
 
     if recurrent_freq
       event = {
@@ -33,21 +59,12 @@ class AddEventWorker
         }
     end
 
-    @call = {
-          :api_method => @calendar.events.insert,
-          :parameters => {'calendarId' =>  user_id.email}, #'lowell.abbott@gmail.com'
-          :body => MultiJson.dump(event1),
-          :headers => {'Content-Type' => 'application/json'}
-        }
-    
-   
-=begin
-    result = client.execute(:api_method => service.events.insert,
+result = client.execute(:api_method => service.events.insert,
                         :parameters => {'calendarId' => 'primary'},
                         :body => JSON.dump(event),
                         :headers => {'Content-Type' => 'application/json'})
-    print result.data.id
-=end
+print result.data.id
+
 
     #Step 2
     #Validate input
@@ -55,15 +72,6 @@ class AddEventWorker
     #Step 3
     #Use the user g-token to create the event using the calendar api
     
-    batch = Google::APIClient::BatchRequest.new { |result| }
-    batch.add(@call, '1')
-    request = batch.to_env(CLIENT.connection)
-    boundary = Google::APIClient::BatchRequest::BATCH_BOUNDARY
-    request[:method].to_s.downcase.should == 'post'
-    request[:url].to_s.should == 'https://www.googleapis.com/batch'
-    request[:request_headers]['Content-Type'].should == "multipart/mixed;boundary=#{boundary}"
-
-
     #Step 4
     #Call sarah_py POST to send a reply to the user indicating the meeting time
     
