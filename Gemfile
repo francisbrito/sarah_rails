@@ -63,4 +63,7 @@ gem 'wit_ruby'
 # gem 'capistrano-rails', group: :development
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
+# gem 'debugger', group: [:development, :test
+
+# gem for connecting sarah w/ google api
+gem 'google-api-client'
