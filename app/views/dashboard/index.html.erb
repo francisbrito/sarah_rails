@@ -42,6 +42,11 @@
         <hr>
         <% if not @messages.empty? %>
             <table class="table">
+                <colgroup>
+                    <col class="col-md-2"></col>
+                    <col class="col-md-4"></col>
+                    <col class="col-md-6"></col>
+                </colgroup>
                 <thead>
                     <tr>
                         <th>
@@ -60,7 +65,7 @@
                         <tr>
                             <td><%= m.id %></td>
                             <td><%= m.phone %></td>
-                            <td><%= truncate m.content %></td>
+                            <td><%= truncate m.content, length: 50 %></td>
                         </tr>
                     <% end %>
                 </tbody>
