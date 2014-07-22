@@ -1,4 +1,4 @@
-class AddContactWorker
+class DeleteContactWorker
   include Sidekiq::Worker
   def perform(user_id, contact_id)
     #Step 1
