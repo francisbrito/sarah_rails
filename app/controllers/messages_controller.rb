@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
-  protect_from_forgery :except => :create 
+  protect_from_forgery :except => :create
 
   # GET /messages
   # GET /messages.json
@@ -26,6 +26,17 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(message_params)
+    #Add a user to the message object to be created.
+    begin
+      user = User.find_by phone: params[:phone]
+      @message.user_id = user.id
+    rescue Exception => e
+      puts e.message
+      puts e.backtrace.inspect
+      # Reply to the user that they are not registered
+      format.json { render json: {:message : 'Not registered'}, status: :unprocessable_entity }
+      return
+    end
 
     respond_to do |format|
       if @message.save

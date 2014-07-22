@@ -42,6 +42,10 @@ gem 'omniauth-github'
 # Devise
 gem 'devise'
 
+# Sidekiq
+# Library to process background jobs
+gem 'sidekiq'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -53,4 +57,3 @@ gem 'devise'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
