@@ -28,7 +28,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     #Add a user to the message object to be created.
     begin
-      user = User.find_by phone: params[:phone]
+      user = User.find_by phone_number: params[:phone]
       @message.user_id = user.id
     rescue Exception => e
       puts e.message

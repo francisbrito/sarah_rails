@@ -11,7 +11,7 @@ class Response
 	uri = URI.parse("http://localhost:5000/message")
 
 	header = {'Content-Type'=> 'text/json'}
-	user =  {                   
+	user =  {
                     'msg'=> content,
                     'number'=> phone_number
              }
