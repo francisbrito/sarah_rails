@@ -46,6 +46,13 @@ gem 'devise'
 # Library to process background jobs
 gem 'sidekiq'
 
+# Pry
+gem 'pry'
+gem 'pry-rails'
+
+# Wit Client
+gem 'wit_ruby'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -14,7 +14,7 @@
     <% @messages.each do |message| %>
       <tr>
         <td><%= message.content %></td>
-        <td><%= message.used_id %></td>
+        <td><%= message.user_id %></td>
         <td><%= message.phone %></td>
         <td><%= link_to 'Show', message %></td>
         <td><%= link_to 'Edit', edit_message_path(message) %></td>

@@ -22,19 +22,51 @@
         <hr>
         <div class="col-md-3">
             <h3>Google</h3>
-            <%= link_to 'Integrate with Google', user_omniauth_authorize_path(:google_oauth2), class: 'btn btn-default btn-google' %>
+            <%= link_to 'Integrate with Google', user_omniauth_authorize_path(:google_oauth2), class: 'btn btn-default btn-google', disabled: @integrated_with_google %>
         </div>
         <div class="col-md-3">
             <h3>Facebook</h3>
-            <%= link_to 'Integrate with Facebook', user_omniauth_authorize_path(:facebook), class: 'btn btn-default btn-facebook' %>
+            <%= link_to 'Integrate with Facebook', user_omniauth_authorize_path(:facebook), class: 'btn btn-default btn-facebook', disabled: true %>
         </div>
         <div class="col-md-3">
             <h3>Twitter</h3>
-            <%= link_to 'Integrate with Twitter', user_omniauth_authorize_path(:twitter), class: 'btn btn-default btn-twitter' %>
+            <%= link_to 'Integrate with Twitter', user_omniauth_authorize_path(:twitter), class: 'btn btn-default btn-twitter', disabled: true %>
         </div>
         <div class="col-md-3">
             <h3>Github</h3>
-            <%= link_to 'Integrate with Github', user_omniauth_authorize_path(:github), class: 'btn btn-default btn-github' %>
+            <%= link_to 'Integrate with Github', user_omniauth_authorize_path(:github), class: 'btn btn-default btn-github', disabled: true %>
         </div>
+    </div>
+    <div class="row">
+        <h1 class="page-title">Messages</h1>
+        <hr>
+        <% if not @messages.empty? %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Phone number
+                        </th>
+                        <th>
+                            Content
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @messages.each do |m| %>
+                        <tr>
+                            <td><%= m.id %></td>
+                            <td><%= m.phone %></td>
+                            <td><%= truncate m.content %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        <% else %>
+            <p class="well">Nope. Didn't find any messages.</p>
+        <% end %>
     </div>
 </div>
